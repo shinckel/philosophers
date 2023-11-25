@@ -3,12 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+         #
+#    By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/17 18:17:42 by shinckel          #+#    #+#              #
-#    Updated: 2023/11/17 18:19:16 by shinckel         ###   ########.fr        #
+#    Updated: 2023/11/22 19:44:47 by shinckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# how to add a folder for object files?
 
 NAME := philo
 CC := cc
@@ -17,8 +19,6 @@ CFLAGS += -fsanitize=address
 
 SRC := $(wildcard src/*.c)
 OBJ := $(SRC:.c=.o)
-LIBFT_DIR := ./libft
-LIBFT := $(LIBFT_DIR)/libft.a
 
 # Define colors
 RED := \033[1;41m
@@ -27,15 +27,9 @@ RESET := \033[0m
 
 all: $(NAME)
 
-# target -> library file -> invoke the make utility recursively
-# -C allows to build targets in different directory than where Makefile resides
-$(LIBFT):
-	$(MAKE) bonus -C $(LIBFT_DIR)
-
-$(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
-	@git submodule update --init --recursive
-	@echo "$(GREEN) Ready to PUSH_SWAP $(RESET)"
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@echo "$(GREEN) Let's eat, PHILOSOPERS! $(RESET)"
 
 clean:
 	@rm -f $(OBJ)
@@ -47,8 +41,5 @@ fclean: clean
 
 re: fclean all
 
-clean_libft:
-	@$(MAKE) -C $(LIBFT_DIR) fclean
-
 # actions that should be executed when the target is invoked
-.PHONY: all clean fclean re clean_libft submodule
+.PHONY: all clean fclean re

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:20:36 by shinckel          #+#    #+#             */
-/*   Updated: 2023/11/24 15:02:54 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/11/25 12:25:10 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,13 @@
 // create threads
 # include <pthread.h>
 # include <limits.h>
+# include <time.h>
 
 // max number of philosophers
 # define MAX_PHILO 200
 
 // error messages
 # define WRONG_ARGS "\e[1;41m Wrong args! max 200 philos, only '+' nbr \e[0m"
-
-// lock threads execution until block of code is finished
-typedef struct s_mutex
-{
-	pthread_mutex_t dead_lock;
-	pthread_mutex_t meal_lock;
-	pthread_mutex_t think_lock;
-
-} t_mutex;
 
 typedef struct s_data
 {
@@ -49,14 +41,23 @@ typedef struct s_data
 	int				num_of_philos;
 	int				num_times_to_eat;
 	int				*dead;
+
+	pthread_mutex_t dead_lock;
+	pthread_mutex_t meal_lock;
+	pthread_mutex_t think_lock;
+
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	*write_lock;
-	pthread_mutex_t	*dead_lock;
-	pthread_mutex_t	*meal_lock;
+	// pthread_mutex_t	*write_lock;
+	// pthread_mutex_t	*dead_lock;
+	// pthread_mutex_t	*meal_lock;
 }				t_data;
 
+// treat arguments
+int		ft_atoi(char *str);
+
 // Initializing the program structure
+void	init_t_data(int argc, char ** argv, t_data *data);
 
 // Create threads and routine
 // void    *routine(void *add);

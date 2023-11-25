@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:21:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/11/24 15:35:32 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/11/25 12:24:52 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,11 @@ int	check_args(int argc, char **argv)
 	i = 1;
 	if (argc < 5 || argc > 6)
 		return (1);
-	if (ft_atoi(argv[1]) > MAX_PHILO || ft_atoi(argv[1]) < 1
-		|| ft_atoi(argv[i]) > INT_MAX || ft_atoi(argv[i]) < INT_MIN)
-		return (1);
 	while (i < argc)
 	{
 		if (argv[i] == NULL)
+			return (1);
+		if (i == 1 && ft_atoi(argv[i]) > MAX_PHILO)
 			return (1);
 		if (ft_atoi(argv[i]) <= 0
 			|| (ft_atoi(argv[i]) > INT_MAX || ft_atoi(argv[i]) < INT_MIN))
@@ -81,59 +80,18 @@ int	check_args(int argc, char **argv)
 	return (0);
 }
 
-//check valid arguments
-// philosophers number?
-// time to die?
-// time to eat?
-// time to sleep?
-// number of times each philosopher must eat?
-// check if input value is correct
-
-int mails = 0;
-pthread_mutex_t mutex;
-
-void    *routine()
-{ 
-	for (int i = 0; i < 100000; i++)
-	{
-		pthread_mutex_lock(&mutex);
-		mails++;
-		pthread_mutex_unlock(&mutex);
-	}
-    return (NULL);
-}
-
 int	main(int argc, char **argv)
 {
-	// check valid arguments
-	// numbers of philo
 	if (check_args(argc, argv))
 	{
 		printf(WRONG_ARGS);
 		return (1);
 	}
+	init_t_data(argc, argv, data());
 	// init program
 	// init philo... init forks
 	// create threads
 	// clean and destroy all
 
-	pthread_t   t1;
-	pthread_t   t2;
-	int	value0 = 1;
-	int	value1 = 2;
-
-	pthread_mutex_init(&mutex, NULL);
-
-    // NULL default attributes
-    pthread_create(&t1, NULL, routine, (void *)&value0);
-    pthread_create(&t2, NULL, routine, (void *)&value1);
-
-    // wait for thread to terminate
-    pthread_join(t1, NULL);
-    pthread_join(t2, NULL);
-
-	pthread_mutex_destroy(&mutex);
-
-	printf("Total mails: %d\n", mails);
 	return (0);
 }

@@ -6,11 +6,17 @@ This project was developed for 42 school. For comprehensive information regardin
 + keywords: basic unit of execution / thread
 + how to organize the eating action of the philosophers
 + race conditions
++ lightweight process
 ```
 
 ## High-level Overview
 
-0. 
+Resources and data can be shared between threads. Each thread has its own stack and context switching is fast. A fork() induces a parent-child relationship between two processes. Thread creation induces a peer relationship between all the threads of a process.
+
+1. check valid arguments: philosophers number? time to die? time to eat? time to sleep? number os times each philosopher must eat?
+2. init program, assign user's input to data struct;
+3. create threads;
+4. clean and destroy all;
 
 ```c
 int	main(int argc, char **argv)
@@ -146,7 +152,7 @@ int	main(int argc, char **argv)
 } // Total mails: 200000
 ```
 
-**References:** <br />
+### References:
 [Philosophers 42 Guide— “The Dining Philosophers Problem”](https://medium.com/@ruinadd/philosophers-42-guide-the-dining-philosophers-problem-893a24bc0fe2)<br />
 [Short introduction to threads (pthreads)](https://www.youtube.com/watch?v=d9s_d28yJq0&list=PLfqABt5AS4FmuQf70psXrsMLEDQXNkLq2)<br />
 [How to create threads in a loop (pthread_create)](https://www.youtube.com/watch?v=xoXzp4B8aQk&list=PLfqABt5AS4FmuQf70psXrsMLEDQXNkLq2&index=5)
@@ -164,23 +170,9 @@ int	main(int argc, char **argv)
 | **Check arguments** | | 4 arguments - n philosophers, time will die, time to eat, time to sleep, number of times for eating before program stops(optional) |
 | **Compile into assembly**| `gcc -S main.c` | Output `main.s`. Interesting to check how many actions were done behind the scene. |
 | **threas in a loop**| `for loop {pthread_create(), pthread_join()}` | Threads wouldn't run in parallel. To solve this problem: two loops, one for create and one for join instructions. |
-
-
-pthread_join execution pauses until thread is done
-
-I can set attributes to the thread
-
-void pointer - I could pass a value via struct, as an arg
-
-// pthread_join(thread1, NULL);
-NULL- the return value of that function
-
-pthread_create(&thread1, NULL, computation, (void *)&value1);
-pass a void pointer as an argument
-then you can typecasted to wherever data type needed
-
-time ./a.out
-time to run the executable
+| **pthread_join()** | `int pthread_join(pthread_t thread, void **retval)` | Execution pauses until thread is done. Second argument is a reference to a pointer `(void **)` (then you can typecasted to wherever data type needed). In the example `pthread_join(thread1, NULL)`, NULL is the returned value of the routine created in `pthread_create(&thread1, NULL, computation, (void *)&value1);` |
+| **pass arguments** | | Pass unique arguments to threads, default value is `NULL`. |
+| **time** | `time ./a.out` | Time to run the executable. |
 
 
 

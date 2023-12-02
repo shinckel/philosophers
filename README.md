@@ -173,6 +173,7 @@ int	main(int argc, char **argv)
 | **pthread_join()** | `int pthread_join(pthread_t thread, void **retval)` | Execution pauses until thread is done. Second argument is a reference to a pointer `(void **)` (then you can typecasted to wherever data type needed). In the example `pthread_join(thread1, NULL)`, NULL is the returned value of the routine created in `pthread_create(&thread1, NULL, computation, (void *)&value1);` |
 | **pass arguments** | | Pass unique arguments to threads, default value is `NULL`. |
 | **time** | `time ./a.out` | Time to run the executable. |
+| **get current time**| `gettimeofday()` |  |
 
 
 

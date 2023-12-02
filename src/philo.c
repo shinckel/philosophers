@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:21:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/11/25 12:24:52 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:13:12 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,14 @@ int	check_args(int argc, char **argv)
 	return (0);
 }
 
+//check valid arguments
+// philosophers number?
+// time to die?
+// time to eat?
+// time to sleep?
+// number of times each philosopher must eat?
+// check if input value is correct
+
 int	main(int argc, char **argv)
 {
 	if (check_args(argc, argv))
@@ -87,7 +95,12 @@ int	main(int argc, char **argv)
 		printf(WRONG_ARGS);
 		return (1);
 	}
-	init_t_data(argc, argv, data());
+	init_t_data(argc, argv);
+	data()->philos = (t_philo *)malloc(sizeof(t_philo) * data()->num_of_philos);
+	if (!data()->philos)
+		return (1); // CLEAN PROGRAM
+	create_philos();
+
 	// init program
 	// init philo... init forks
 	// create threads

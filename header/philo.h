@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:20:36 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/02 17:13:41 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/03 00:01:08 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,15 @@
 # define CREATION_ERROR "\e[1;41m Error during threads creation \e[0m"
 # define TIME_ERROR "\e[1;41m Error gettimeofday() \e[0m"
 // action messages
-# define THINK "\e[1;48;5;027m I am thinking... \e[0m"
-
-typedef struct s_fork
-{
-	int				status;
-	pthread_mutex_t	lock;
-}				t_fork;
+# define THINK "is thinking..."
+# define DREAM "is dreaming..."
+# define EAT "is eating..."
+# define FORK_L "has taken left fork..."
+# define FORK_R "has taken right fork..."
+# define DEATH "is dead..."
 
 typedef struct s_philo
 {
-	t_fork			*forks;
 	pthread_t		thread;
 	int				id;
 	int				n_meals;
@@ -52,8 +50,10 @@ typedef struct s_data
 {
 	t_philo			*philos;
 
-	int				eating;
-	size_t			last_meal;
+	int				eating; // flags? it will communicate with observer
+	// should the flags be in philo struct?
+
+	// size_t			last_meal;
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
@@ -62,12 +62,10 @@ typedef struct s_data
 	int				num_times_to_eat;
 	int				*dead;
 
-	pthread_mutex_t *dead_lock;
-	pthread_mutex_t *meal_lock;
-	pthread_mutex_t *think_lock;
-
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	meal_lock;
+	pthread_mutex_t	write_lock;
+	pthread_mutex_t	*dead_lock; //status ?
+	pthread_mutex_t	*fork_lock; //status ?
 }				t_data;
 
 // program??
@@ -84,17 +82,18 @@ t_data	*data(void);
 
 // Create threads and routine
 void    create_philos();
-int		philo_meta_data(int index);
-void	*routine(void *data);
+int		philo_data(int index);
+void	*routine(void *philo);
 // void    *routine2(void *add);
 
 // Routine actions
-void    think(t_data *data);
+void    think(t_philo *philo);
+void    eat(t_philo *philo);
 
 // Free memory and destroy mutexes
 
 // Utility functions
-void    print_thread_execution(t_data *data, char *message);
+void    print_thread_execution(t_philo *philo, char *message);
 time_t  current_time();
 
 #endif

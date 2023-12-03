@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:26:43 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/02 17:15:22 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:50:45 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,8 @@ static void    milliseconds_to_time(time_t milliseconds)
     hours = minutes / 60;
     seconds = seconds % 60;
     minutes = minutes % 60;
-    hours = hours % 60;
+    hours = hours % 12;
     printf("\e[1;48;5;129m %lu:%lu:%lu \e[0m\n", hours, minutes, seconds);
-}
-
-/* ************************************************************************** */
-
-// guarantee that each message will be printed once at a time
-// control when each activity is being executed (time stamp)
-void    print_thread_execution(t_data *data, char *message)
-{
-    pthread_mutex_t write_lock;
-
-    pthread_mutex_lock(&write_lock);
-    printf("%i %s %lu ", 1, message, current_time() - data->start_time);
-    milliseconds_to_time(current_time() - data->start_time);
-    pthread_mutex_unlock(&write_lock);
 }
 
 // current time in milliseconds
@@ -53,7 +39,22 @@ time_t  current_time()
 
     if (gettimeofday(&time, NULL) == -1)
         printf("%s", TIME_ERROR);
+    // printf("current time: %lu\n", ((time.tv_sec * 1000) + (time.tv_usec / 1000)));
     return ((time.tv_sec * 1000) + (time.tv_usec / 1000));   
+}
+
+/* ************************************************************************** */
+
+// guarantee that each message will be printed once at a time
+// control when each activity is being executed (time stamp)
+void    print_thread_execution(t_philo *philo, char *message)
+{
+    pthread_mutex_init(&data()->write_lock, NULL);
+    pthread_mutex_lock(&data()->write_lock);
+    printf("\e[1;48;5;027m %i %s \e[0m", philo->id, message);
+    printf("\e[1;30;48;5;226m %lu \e[0m", current_time() - data()->start_time);
+    milliseconds_to_time(current_time());
+    pthread_mutex_unlock(&data()->write_lock);
 }
 
 // free memory

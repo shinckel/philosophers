@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:21:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/02 17:13:12 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/02 23:29:01 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,22 @@ int	check_args(int argc, char **argv)
 // number of times each philosopher must eat?
 // check if input value is correct
 
+static int	init_forks_and_philos()
+{
+	// t_philo	*philos;
+	// t_fork	*f;
+	int	i;
+
+	i = -1;
+	data()->philos = (t_philo *)malloc(sizeof(t_philo) * data()->num_of_philos);
+	data()->fork_lock = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data()->num_of_philos);
+	if (!data()->philos)
+		return (1);
+	while (++i < data()->num_of_philos)
+		pthread_mutex_init(&data()->fork_lock[i], NULL);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	if (check_args(argc, argv))
@@ -96,14 +112,9 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	init_t_data(argc, argv);
-	data()->philos = (t_philo *)malloc(sizeof(t_philo) * data()->num_of_philos);
-	if (!data()->philos)
+	if (init_forks_and_philos())
 		return (1); // CLEAN PROGRAM
 	create_philos();
-
-	// init program
-	// init philo... init forks
-	// create threads
 	// clean and destroy all
 
 	return (0);

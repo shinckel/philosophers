@@ -6,23 +6,13 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:20:50 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/02 17:13:30 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:00:38 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 // Initializing the program structure
-// death status
-	// init mutex? death.lock
-	// number of philos ------ OK
-	// time for dying ------ OK
-	// time for eating ------ OK
-	// time fot sleep ------ OK
-	// 5 or 6 arguments? number of times for eat, or INT_MAX ------ OK
-	// data() start get_time()
-	// init mutex? data() print
-	// data()->death = death
 void	init_t_data(int argc, char ** argv)
 {
 	data()->num_of_philos = ft_atoi(argv[1]);
@@ -39,9 +29,3 @@ void	init_t_data(int argc, char ** argv)
 	printf("you will sleep on %zu\n", data()->time_to_sleep);
 	printf("please eat %d times\n", data()->num_times_to_eat);
 }
-
-// Initializing the forks mutexes
-
-// Initializing the philosophers
-
-// Initializing the input from user

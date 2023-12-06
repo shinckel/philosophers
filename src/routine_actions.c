@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:24:43 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/02 23:51:55 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:17:55 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 void    think(t_philo *philo)
 {
-    print_thread_execution(philo, THINK);
+    print_thread_execution(philo, THINK, PINK);
+}
+
+void	dream(t_philo *philo)
+{
+	print_thread_execution(philo, DREAM, BLUE);
+	ft_usleep(data()->time_to_sleep);
 }
 
 /*
@@ -26,30 +32,18 @@ some variables that give our monitor indications but that’s the general idea.
 
 void    eat(t_philo *philo)
 {
-    pthread_mutex_lock(&data()->fork_lock[philo->id - 1]);
-    print_thread_execution(philo, FORK_L);
-    pthread_mutex_lock(&data()->fork_lock[philo->id % data()->num_of_philos]);
-    print_thread_execution(philo, FORK_R);
-    data()->eating = 1; //flag
-    print_thread_execution(philo, EAT);
-    pthread_mutex_lock(&data()->meal_lock);
+    pthread_mutex_lock(philo->r_fork);
+    print_thread_execution(philo, FORK_R, PURPLE);
+    pthread_mutex_lock(philo->l_fork);
+    print_thread_execution(philo, FORK_L, PURPLE);
+    philo->eating_flag = 1;
+    print_thread_execution(philo, EAT, PURPLE);
+    pthread_mutex_lock(philo->meal_lock);
     philo->last_meal = current_time();
     philo->n_meals++;
-    pthread_mutex_unlock(&data()->meal_lock);
-    sleep(data()->time_to_eat);
-    // usleep(data()->time_to_eat * 1); //update this code
-    data()->eating = 0; // flag
-    pthread_mutex_unlock(&data()->fork_lock[philo->id]);
-    pthread_mutex_unlock(&data()->fork_lock[philo->id % data()->num_of_philos]);
+    pthread_mutex_unlock(philo->meal_lock);
+    usleep(data()->time_to_eat);
+    philo->eating_flag = 1;
+    pthread_mutex_unlock(philo->r_fork);
+    pthread_mutex_unlock(philo->l_fork);
 }
-
-// print_thread_execution(philo, EAT);
-//     philo->n_meals++;
-//     usleep(data()->time_to_eat * 1000);
-
-// void	*routine(void *action)
-// {
-// 	// int		time_to_die;
-// 	// int		time_to_eat;
-// 	// int		time_to_sleep;
-// }

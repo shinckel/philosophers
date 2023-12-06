@@ -6,26 +6,26 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:26:43 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/02 22:50:45 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:16:47 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void    milliseconds_to_time(time_t milliseconds)
-{
-    time_t  seconds;
-    time_t  minutes;
-    time_t  hours;
+// static void    milliseconds_to_time(time_t milliseconds)
+// {
+//     time_t  seconds;
+//     time_t  minutes;
+//     time_t  hours;
     
-    seconds = milliseconds / 1000;
-    minutes = seconds / 60;
-    hours = minutes / 60;
-    seconds = seconds % 60;
-    minutes = minutes % 60;
-    hours = hours % 12;
-    printf("\e[1;48;5;129m %lu:%lu:%lu \e[0m\n", hours, minutes, seconds);
-}
+//     seconds = milliseconds / 1000;
+//     minutes = seconds / 60;
+//     hours = minutes / 60;
+//     seconds = seconds % 60;
+//     minutes = minutes % 60;
+//     hours = hours % 12;
+//     printf("%s %lu:%lu:%lu %s\n", CYAN, hours, minutes, seconds, RESET);
+// }
 
 // current time in milliseconds
 // 1 second = 1000 milliseconds
@@ -43,19 +43,51 @@ time_t  current_time()
     return ((time.tv_sec * 1000) + (time.tv_usec / 1000));   
 }
 
+// Improved version of sleep function
+int ft_usleep(size_t milliseconds)
+{
+	size_t	start;
+
+	start = current_time();
+	while ((current_time() - start) < milliseconds)
+		usleep(500);
+	return (0);
+}
+
 /* ************************************************************************** */
 
 // guarantee that each message will be printed once at a time
 // control when each activity is being executed (time stamp)
-void    print_thread_execution(t_philo *philo, char *message)
+// zu is the placeholder for size_t
+void    print_thread_execution(t_philo *philo, char *message, char *color)
 {
-    pthread_mutex_init(&data()->write_lock, NULL);
-    pthread_mutex_lock(&data()->write_lock);
-    printf("\e[1;48;5;027m %i %s \e[0m", philo->id, message);
-    printf("\e[1;30;48;5;226m %lu \e[0m", current_time() - data()->start_time);
-    milliseconds_to_time(current_time());
-    pthread_mutex_unlock(&data()->write_lock);
+    size_t  time;
+
+    time = current_time() - data()->start_time;
+    pthread_mutex_lock(philo->write_lock);
+    printf("%s%zu %d%s%s %s %s\n", YELLOW, time, philo->id, RESET, color, message, RESET);
+    // milliseconds_to_time(current_time());
+    pthread_mutex_unlock(philo->write_lock);
 }
 
 // free memory
 //pthread_mutex_destroy
+// void	destory_all(char *str, t_program *program, pthread_mutex_t *forks)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (str)
+// 	{
+// 		write(2, str, ft_strlen(str));
+// 		write(2, "\n", 1);
+// 	}
+// 	pthread_mutex_destroy(&program->write_lock);
+// 	pthread_mutex_destroy(&program->meal_lock);
+// 	pthread_mutex_destroy(&program->dead_lock);
+// 	while (i < program->philos[0].num_of_philos)
+// 	{
+// 		pthread_mutex_destroy(&forks[i]);
+// 		i++;
+// 	}
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:26:43 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/06 16:16:47 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/06 20:25:14 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,26 @@ void    print_thread_execution(t_philo *philo, char *message, char *color)
     pthread_mutex_unlock(philo->write_lock);
 }
 
+
 // free memory
 //pthread_mutex_destroy
-// void	destory_all(char *str, t_program *program, pthread_mutex_t *forks)
-// {
-// 	int	i;
+void	destory_all(char *str)
+{
+	int	i;
 
-// 	i = 0;
-// 	if (str)
-// 	{
-// 		write(2, str, ft_strlen(str));
-// 		write(2, "\n", 1);
-// 	}
-// 	pthread_mutex_destroy(&program->write_lock);
-// 	pthread_mutex_destroy(&program->meal_lock);
-// 	pthread_mutex_destroy(&program->dead_lock);
-// 	while (i < program->philos[0].num_of_philos)
-// 	{
-// 		pthread_mutex_destroy(&forks[i]);
-// 		i++;
-// 	}
-// }
+	i = 0;
+    (void)str;
+	if (str)
+	{
+		write(2, str, ft_strlen(str));
+		write(2, "\n", 1);
+	}
+	pthread_mutex_destroy(&data()->o_write_lock);
+	pthread_mutex_destroy(&data()->o_meal_lock);
+	pthread_mutex_destroy(&data()->o_dead_lock);
+	while (i < data()->num_of_philos)
+	{
+		pthread_mutex_destroy(&data()->forks[i]);
+		i++;
+	}
+}

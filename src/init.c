@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:20:50 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/06 14:00:38 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/06 20:27:00 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i])
+		i++;
+	return(i);
+}
+
+// this is a trick to avoid using global variables
+// you can call the function and use data anywhere
+t_data	*data(void)
+{
+	static t_data	data;
+
+	return (&data);
+}
 
 // Initializing the program structure
 void	init_t_data(int argc, char ** argv)

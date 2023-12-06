@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:20:36 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/06 16:17:25 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/06 21:20:25 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define RED "\e[1;41m"
 # define BLUE "\e[1;48;5;027m"
 # define GREEN "\e[1;42m"
-# define YELLOW "\e[1;48;5;226m"
+# define YELLOW "\e[1;30;48;5;226m"
 # define PURPLE "\e[1;48;5;129m"
 # define CYAN "\e[1;48;5;051m"
 # define WHITE "\e[1;48;5;255m"
@@ -41,6 +41,7 @@
 # define WRONG_ARGS "\e[1;41m Wrong args! max 200 philos, only '+' nbr \e[0m"
 # define CREATION_ERROR "\e[1;41m Error during threads creation \e[0m"
 # define TIME_ERROR "\e[1;41m Error gettimeofday() \e[0m"
+# define FINISH "\e[1;41m Finish and clean program \e[0m"
 // action messages
 # define THINK "is thinking..."
 # define DREAM "is dreaming..."
@@ -54,8 +55,8 @@ typedef struct s_philo
 	pthread_t		thread;
 	int				id;
 	int				n_meals;
-	uint64_t		last_meal;
-	int				dead_flag;
+	size_t			last_meal;
+	int				*dead_flag;
 	int				eating_flag;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
@@ -75,7 +76,7 @@ typedef struct s_data
 	size_t			start_time;
 	int				num_of_philos;
 	int				num_times_to_eat;
-	int				*dead;
+	int				dead_flag;
 
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	o_dead_lock;
@@ -102,10 +103,12 @@ void    eat(t_philo *philo);
 void	dream(t_philo *philo);
 
 // Free memory and destroy mutexes
+void	destory_all(char *str);
 
 // Utility functions
 void    print_thread_execution(t_philo *philo, char *message, char *color);
 time_t  current_time();
 int		ft_usleep(size_t milliseconds);
+int		ft_strlen(char *str);
 
 #endif

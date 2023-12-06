@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:21:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/06 14:37:49 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/06 21:40:30 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,6 @@
 // pthread_detach, pthread_join, pthread_mutex_init,
 // pthread_mutex_destroy, pthread_mutex_lock,
 // pthread_mutex_unlock
-
-// this is a trick to avoid using global variables
-// you can call the function and use data anywhere
-t_data	*data(void)
-{
-	static t_data	data;
-
-	return (&data);
-}
 
 // convert a string into integer
 // check if there are forbidden characters
@@ -91,6 +82,7 @@ static int	init_observer_philos_forks()
 	pthread_mutex_init(&data()->o_dead_lock, NULL);
 	pthread_mutex_init(&data()->o_meal_lock, NULL);
 	pthread_mutex_init(&data()->o_write_lock, NULL);
+	data()->dead_flag = 0;
 	if (!data()->philos)
 		return (1);
 	while (++i < data()->num_of_philos)
@@ -110,7 +102,6 @@ int	main(int argc, char **argv)
 	if (init_observer_philos_forks())
 		return (1); // CLEAN PROGRAM
 	create_philos();
-	// clean and destroy all
-
+	destory_all(FINISH);
 	return (0);
 }

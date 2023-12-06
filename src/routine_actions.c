@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_actions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:24:43 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/06 16:17:55 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/06 20:45:14 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void    think(t_philo *philo)
 {
-    print_thread_execution(philo, THINK, PINK);
+    print_thread_execution(philo, THINK, ORANGE);
 }
 
 void	dream(t_philo *philo)
@@ -33,7 +33,7 @@ some variables that give our monitor indications but that’s the general idea.
 void    eat(t_philo *philo)
 {
     pthread_mutex_lock(philo->r_fork);
-    print_thread_execution(philo, FORK_R, PURPLE);
+    print_thread_execution(philo, FORK_R, PURPLE);void	destory_all(char *str);
     pthread_mutex_lock(philo->l_fork);
     print_thread_execution(philo, FORK_L, PURPLE);
     philo->eating_flag = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:26:43 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/06 20:25:14 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/07 13:04:00 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ time_t  current_time()
     return ((time.tv_sec * 1000) + (time.tv_usec / 1000));   
 }
 
-// Improved version of sleep function
 int ft_usleep(size_t milliseconds)
 {
 	size_t	start;
@@ -65,7 +64,7 @@ void    print_thread_execution(t_philo *philo, char *message, char *color)
 
     time = current_time() - data()->start_time;
     pthread_mutex_lock(philo->write_lock);
-    printf("%s%zu %d%s%s %s %s\n", YELLOW, time, philo->id, RESET, color, message, RESET);
+    printf("%s%zu %d%s%s %s%s\n", YELLOW, time, philo->id, RESET, color, message, RESET);
     // milliseconds_to_time(current_time());
     pthread_mutex_unlock(philo->write_lock);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:20:36 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/06 21:20:25 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/07 10:51:22 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@
 # define TIME_ERROR "\e[1;41m Error gettimeofday() \e[0m"
 # define FINISH "\e[1;41m Finish and clean program \e[0m"
 // action messages
-# define THINK "is thinking..."
-# define DREAM "is dreaming..."
-# define EAT "is eating..."
-# define FORK_L "has taken left fork..."
-# define FORK_R "has taken right fork..."
-# define DEAD "is dead..."
+# define THINK "is thinking"
+# define DREAM "is sleeping"
+# define EAT "is eating"
+# define FORK_L "has taken a fork"
+# define FORK_R "has taken a fork"
+# define DEAD "died"
 
 typedef struct s_philo
 {
@@ -93,7 +93,7 @@ t_data	*data(void);
 
 // Create threads and routine
 void    create_philos();
-int		philo_data(int index);
+void    philo_data();
 void	*routine(void *philo);
 void    *observe(void *philo);
 

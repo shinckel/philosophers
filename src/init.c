@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:20:50 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/06 20:27:00 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:22:44 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_data	*data(void)
 }
 
 // Initializing the program structure
+// data()->num_times_to_eat = INT_MAX;
 void	init_t_data(int argc, char ** argv)
 {
 	data()->num_of_philos = ft_atoi(argv[1]);
@@ -41,7 +42,7 @@ void	init_t_data(int argc, char ** argv)
 	if (argc == 6)
 		data()->num_times_to_eat = ft_atoi(argv[5]);
 	else
-		data()->num_times_to_eat = INT_MAX;
+		data()->num_times_to_eat = -1;
 	printf("you have %d philos!!\n", data()->num_of_philos);
 	printf("you will die on %zu\n", data()->time_to_die);
 	printf("you will eat on %zu\n", data()->time_to_eat);

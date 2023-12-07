@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:25:45 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/06 21:53:42 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:46:54 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,23 @@ int	dead_loop(t_philo *philo)
 	pthread_mutex_lock(philo->dead_lock);
 	if (*philo->dead_flag == 1)
 		return (pthread_mutex_unlock(philo->dead_lock), 1);
-	pthread_mutex_unlock(philo->dead_lock);
-    return (0);
+	return (pthread_mutex_unlock(philo->dead_lock), 0);
 }
 
 void	*routine(void *philo)
 {
-    t_philo *philos;
+    t_philo *philo_routine;
 
-    philos = (t_philo *)philo;
-    if (philos->id % 2 == 0)
+    philo_routine = (t_philo *)philo;
+    if (philo_routine->id % 2 == 0)
         ft_usleep(1);
-    while(!dead_loop(philos))
+    while(!dead_loop(philo_routine))
     {
-        eat(philos);
-        dream(philos);
-        think(philos);
+        eat(philo_routine);
+        dream(philo_routine);
+        think(philo_routine);
     }
-    return (philos);
+    return (philo_routine);
 }
 
 void    create_philos()
@@ -53,8 +52,7 @@ void    create_philos()
     }
 	while (++i < data()->num_of_philos)
     {
-        if (philo_data(i) && pthread_create(&data()->philos[i].thread, NULL,
-            &routine, (void *)&data()->philos[i]) != 0)
+        if (pthread_create(&data()->philos[i].thread, NULL, &routine, (void *)&data()->philos[i]) != 0)
             destory_all(CREATION_ERROR);
     }
     i = -1;
@@ -67,22 +65,28 @@ void    create_philos()
     }
 }
 
-int philo_data(int index)
+void    philo_data()
 {
-    if (!index)
-        data()->start_time = current_time(); //is it ok to start counting start time here?
-    data()->philos[index].id = index + 1;
-    data()->philos[index].eating_flag = 0;
-    data()->philos[index].n_meals = 0;
-    data()->philos[index].dead_flag = &data()->dead_flag;
-    data()->philos[index].last_meal = current_time();
-    data()->philos[index].meal_lock = &data()->o_meal_lock;
-    data()->philos[index].dead_lock = &data()->o_dead_lock;
-    data()->philos[index].write_lock = &data()->o_write_lock;
-    data()->philos[index].l_fork = &data()->forks[index];
-    if (index == 0)
-        data()->philos[index].r_fork = &data()->forks[data()->num_of_philos - 1];
-    else
-        data()->philos[index].r_fork = &data()->forks[index - 1];
-    return (1);
+    int i;
+
+    i = -1;
+    while (++i < data()->num_of_philos)
+    {
+        data()->philos[i].id = i + 1;
+        data()->philos[i].eating_flag = 0;
+        data()->philos[i].n_meals = 0;
+        data()->philos[i].dead_flag = &data()->dead_flag;
+        data()->philos[i].last_meal = current_time();
+        data()->philos[i].meal_lock = &data()->o_meal_lock;
+        data()->philos[i].dead_lock = &data()->o_dead_lock;
+        data()->philos[i].write_lock = &data()->o_write_lock;
+        data()->philos[i].l_fork = &data()->forks[i];
+        if (!i)
+        {
+            data()->start_time = current_time();
+            data()->philos[i].r_fork = &data()->forks[data()->num_of_philos - 1];
+        }
+        else
+            data()->philos[i].r_fork = &data()->forks[i - 1];
+    }
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:21:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/06 21:40:30 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:19:53 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static int	init_observer_philos_forks()
 	int	i;
 
 	i = -1;
-
 	data()->philos = (t_philo *)malloc(sizeof(t_philo) * data()->num_of_philos);
 	data()->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data()->num_of_philos);
 	pthread_mutex_init(&data()->o_dead_lock, NULL);
@@ -91,6 +90,7 @@ static int	init_observer_philos_forks()
 }
 
 // 5 arguments - number of philos, time die, time eat, time sleep, number of meals
+// time die - time to die in milliseconds if philo doesnt eat
 int	main(int argc, char **argv)
 {
 	if (check_args(argc, argv))
@@ -101,7 +101,8 @@ int	main(int argc, char **argv)
 	init_t_data(argc, argv);
 	if (init_observer_philos_forks())
 		return (1); // CLEAN PROGRAM
+	philo_data();
 	create_philos();
-	destory_all(FINISH);
+	destory_all(NULL);
 	return (0);
 }

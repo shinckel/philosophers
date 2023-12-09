@@ -6,16 +6,14 @@
 #    By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/17 18:17:42 by shinckel          #+#    #+#              #
-#    Updated: 2023/12/09 18:07:43 by shinckel         ###   ########.fr        #
+#    Updated: 2023/12/09 18:23:47 by shinckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-# how to add a folder for object files?
 
 NAME := philo
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -Iheader -g -pthread
-# CFLAGS += -fsanitize=thread
+CFLAGS += -fsanitize=thread
 
 # SRC := $(wildcard src/*.c)
 SRC := 	src/init.c \

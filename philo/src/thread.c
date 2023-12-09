@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:25:45 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/09 18:08:30 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:48:35 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	philo_data(void)
 		data()->philos[i].write_lock = &data()->o_write_lock;
 		data()->philos[i].l_fork = &data()->forks[i];
 		data()->philos[i].r_fork = &data()->forks[(i + 1) % (end + 1)];
-		if (!i)
+		if (data()->philos[i].id % 2 != 0)
 		{
 			data()->philos[i].r_fork = &data()->forks[i];
 			data()->philos[i].l_fork = &data()->forks[(i + 1) % (end + 1)];

@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:26:43 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/09 14:08:24 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/09 14:26:00 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_usleep(size_t milliseconds)
 // control when each activity is being executed (time stamp)
 // zu is the placeholder for size_t
 
-int	food_full_check(t_philo *philo)
+static int	full_belly_checker(t_philo *philo)
 {
 	if (data()->num_times_to_eat == -1)
 		return (0);
@@ -72,7 +72,7 @@ void	print_thread_execution(t_philo *philo, char *message, char *color)
 
 	time = current_time() - data()->start_time;
 	pthread_mutex_lock(philo->write_lock);
-	if (!dead_loop(philo) && !food_full_check(philo))
+	if (!dead_loop(philo) && !full_belly_checker(philo))
 		printf("%s%zu %d%s%s %s%s\n", YELLOW, time, philo->id, RESET,
 			color, message, RESET);
 	pthread_mutex_unlock(philo->write_lock);

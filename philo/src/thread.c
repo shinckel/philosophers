@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:25:45 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/07 21:50:46 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/09 14:04:15 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,55 @@ int	dead_loop(t_philo *philo)
 	return (pthread_mutex_unlock(philo->dead_lock), 0);
 }
 
-void	*routine(void *philo)
-{
-	t_philo	*philo_routine;
+// void	*routine(void *philo)
+// {
+// 	t_philo	*philo_routine;
 
-	philo_routine = (t_philo *)philo;
-	if (philo_routine->id % 2 == 0)
-		ft_usleep(1);
-	while (!dead_loop(philo_routine))
+// 	philo_routine = (t_philo *)philo;
+// 	if (philo_routine->id % 2 == 0)
+// 		ft_usleep(1);
+// 	while (!dead_loop(philo_routine))
+// 	{
+// 		eat(philo_routine);
+// 		dream(philo_routine);
+// 		think(philo_routine);
+// 	}
+// 	return (philo_routine);
+// }
+
+// void	*routine(void *philo)
+// {
+// 	t_philo	*philo_routine;
+
+// 	philo_routine = (t_philo *)philo;
+// 	if (philo_routine->id % 2 == 0)
+// 		ft_usleep(1);
+// 	while (!dead_loop(philo_routine))
+// 	{
+// 		eat(philo_routine);
+// 		dream(philo_routine);
+// 		think(philo_routine);
+// 	}
+// 	return (philo_routine);
+// }
+
+void	*routine(void *philos)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)philos;
+	if (philo->id % 2 != 0)
 	{
-		eat(philo_routine);
-		dream(philo_routine);
-		think(philo_routine);
+		think(philo);
+		ft_usleep(10);
 	}
-	return (philo_routine);
+	while (!dead_loop(philo))
+	{
+		eat(philo);
+		dream(philo);
+		think(philo);
+	}
+	return (NULL);
 }
 
 void	create_philos(void)
@@ -72,6 +107,7 @@ void	philo_data(void)
 
 	i = -1;
 	end = data()->num_of_philos - 1;
+	data()->start_time = current_time();
 	while (++i < data()->num_of_philos)
 	{
 		data()->philos[i].id = i + 1;
@@ -83,13 +119,14 @@ void	philo_data(void)
 		data()->philos[i].dead_lock = &data()->o_dead_lock;
 		data()->philos[i].write_lock = &data()->o_write_lock;
 		data()->philos[i].l_fork = &data()->forks[i];
-		if (!i)
-		{
-			data()->start_time = current_time();
-			data()->philos[0].l_fork = &data()->forks[end];
-			data()->philos[0].r_fork = &data()->forks[0];
-		}
-		else
-			data()->philos[i].r_fork = &data()->forks[i - 1];
+		data()->philos[i].r_fork = &data()->forks[(i + 1) % (end + 1)];
+		// if (!i)
+		// {
+		// 	data()->start_time = current_time();
+		// 	data()->philos[0].l_fork = &data()->forks[end];
+		// 	data()->philos[0].r_fork = &data()->forks[0];
+		// }
+		// else
+		// 	data()->philos[i].r_fork = &data()->forks[i - 1];
 	}
 }

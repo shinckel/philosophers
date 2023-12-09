@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:20:36 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/07 22:04:43 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/09 13:45:49 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,27 @@
 # define MAX_PHILO 200
 
 // colors
-# define RED "\e[1;41m"
-# define BLUE "\e[1;48;5;027m"
-# define GREEN "\e[1;42m"
-# define YELLOW "\e[1;30;48;5;226m"
-# define PURPLE "\e[1;48;5;129m"
-# define CYAN "\e[1;48;5;051m"
-# define WHITE "\e[1;48;5;255m"
-# define ORANGE "\e[1;48;5;208m"
-# define PINK "\e[1;48;5;213m"
-# define RESET "\e[0m"
+// # define RED "\e[1;41m"
+// # define BLUE "\e[1;48;5;027m"
+// # define GREEN "\e[1;42m"
+// # define YELLOW "\e[1;30;48;5;226m"
+// # define PURPLE "\e[1;48;5;129m"
+// # define CYAN "\e[1;48;5;051m"
+// # define WHITE "\e[1;48;5;255m"
+// # define ORANGE "\e[1;48;5;208m"
+// # define PINK "\e[1;48;5;213m"
+// # define RESET "\e[0m"
+// testing with /philo 5 800 200 200 7 | grep "is eating" | wc -l
+# define RED ""
+# define BLUE ""
+# define GREEN ""
+# define YELLOW ""
+# define PURPLE ""
+# define CYAN ""
+# define WHITE ""
+# define ORANGE ""
+# define PINK ""
+# define RESET ""
 // error messages
 # define WRONG_ARGS "\e[1;41m Wrong args! max 200 philos, only '+' nbr \e[0m"
 # define CREATION_ERROR "\e[1;41m Error during threads creation \e[0m"

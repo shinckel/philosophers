@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:20:50 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/07 21:24:57 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/09 14:08:32 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,23 @@ void	init_t_data(int argc, char **argv)
 		data()->num_times_to_eat = (int)ft_atoll(argv[5]);
 	else
 		data()->num_times_to_eat = -1;
-	printf("you have %d philos!!\n", data()->num_of_philos);
-	printf("you will die on %zu\n", data()->time_to_die);
-	printf("you will eat on %zu\n", data()->time_to_eat);
-	printf("you will sleep on %zu\n", data()->time_to_sleep);
-	printf("please eat %d times\n", data()->num_times_to_eat);
+}
+
+void	destory_all(char *str)
+{
+	int	i;
+
+	i = -1;
+	if (str)
+	{
+		write(2, str, ft_strlen(str));
+		write(2, "\n", 1);
+	}
+	pthread_mutex_destroy(&data()->o_write_lock);
+	pthread_mutex_destroy(&data()->o_meal_lock);
+	pthread_mutex_destroy(&data()->o_dead_lock);
+	while (++i < data()->num_of_philos)
+		pthread_mutex_destroy(&data()->forks[i]);
+	free(data()->philos);
+	free(data()->forks);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+         #
+#    By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/17 18:17:42 by shinckel          #+#    #+#              #
-#    Updated: 2023/12/07 20:51:23 by shinckel         ###   ########.fr        #
+#    Updated: 2023/12/09 13:42:52 by shinckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 NAME := philo
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -Iheader -g -pthread
-# CFLAGS += -fsanitize=thread
+CFLAGS += -fsanitize=thread
 
 # SRC := $(wildcard src/*.c)
 SRC := 	src/init.c \

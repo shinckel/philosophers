@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:26:43 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/07 22:00:57 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/09 14:08:24 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,33 +55,25 @@ int	ft_usleep(size_t milliseconds)
 // guarantee that each message will be printed once at a time
 // control when each activity is being executed (time stamp)
 // zu is the placeholder for size_t
+
+int	food_full_check(t_philo *philo)
+{
+	if (data()->num_times_to_eat == -1)
+		return (0);
+	else if (philo->n_meals < data()->num_times_to_eat)
+		return (0);
+	else
+		return (1);
+}
+
 void	print_thread_execution(t_philo *philo, char *message, char *color)
 {
 	size_t	time;
 
 	time = current_time() - data()->start_time;
 	pthread_mutex_lock(philo->write_lock);
-	if (!dead_loop(philo))
+	if (!dead_loop(philo) && !food_full_check(philo))
 		printf("%s%zu %d%s%s %s%s\n", YELLOW, time, philo->id, RESET,
 			color, message, RESET);
 	pthread_mutex_unlock(philo->write_lock);
-}
-
-void	destory_all(char *str)
-{
-	int	i;
-
-	i = -1;
-	if (str)
-	{
-		write(2, str, ft_strlen(str));
-		write(2, "\n", 1);
-	}
-	pthread_mutex_destroy(&data()->o_write_lock);
-	pthread_mutex_destroy(&data()->o_meal_lock);
-	pthread_mutex_destroy(&data()->o_dead_lock);
-	while (++i < data()->num_of_philos)
-		pthread_mutex_destroy(&data()->forks[i]);
-	free(data()->philos);
-	free(data()->forks);
 }

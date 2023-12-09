@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: shinckel <shinckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:20:36 by shinckel          #+#    #+#             */
-/*   Updated: 2023/12/09 13:45:49 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:09:16 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ typedef struct s_data
 }				t_data;
 
 long long	ft_atoll(const char *str);
-// int		ft_atoll(const char *str);
 void		init_t_data(int argc, char **argv);
 t_data		*data(void);
 void		create_philos(void);

@@ -1,6 +1,4 @@
 # Philosophers
-
-# Minishell
 This project was developed for 42 school. For comprehensive information regarding the requirements, please consult the PDF file in the subject folder of the repository. Furthermore, I have provided my notes and a concise summary below.
 ``` diff
 + keywords: basic unit of execution / thread
